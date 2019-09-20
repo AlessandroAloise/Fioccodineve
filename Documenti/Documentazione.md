@@ -99,39 +99,22 @@ dall'utente.
 | REQ_015 | Sito web | Fornire .class in github ma per gli utenti fornire il jar  |2 |1.0 |
 
 
-### Use case
-
-I casi d’uso rappresentano l’interazione tra i vari attori e le
-funzionalità del prodotto.
 
 ### Pianificazione
 
-Prima di stabilire una pianificazione bisogna avere almeno una vaga idea
-del modello di sviluppo che si intende adottare. In questa sezione
-bisognerà inserire il modello concettuale di sviluppo che si seguirà
-durante il progetto. Gli elementi di riferimento per una buona
-pianificazione derivano da una scomposizione top-down della problematica
-del progetto.
-
-La pianificazione può essere rappresentata mediante un diagramma di
-Gantt.
-
-Se si usano altri metodi di pianificazione (es scrum), dovranno apparire
-in questo capitolo.
-
+Questa è la pianificazione e struttura che abbiamo cercato di rispettare per tutto il percorso di questo progetto.
+![Gantt Preventivo](gantt.png)
 ### Analisi dei mezzi
 
-Elencare e *descrivere* i mezzi disponibili per la realizzazione del
-progetto. Ricordarsi di sempre descrivere nel dettaglio le versioni e il
-modello di riferimento.
+Per la realizzazione di questo progetto ho usato come software:
 
-SDK, librerie, tools utilizzati per la realizzazione del progetto e
-eventuali dipendenze.
+GitHub: Punto di riferimento sul quale caricare  il lavoro fatto attraverso i commit.
 
-Su quale piattaforma dovrà essere eseguito il prodotto? Che hardware
-particolare è coinvolto nel progetto? Che particolarità e limitazioni
-presenta? Che hw sarà disponibile durante lo sviluppo?
+GitHub Desktop 2.1.3: Programma per effettuare il push e pull di commit attraverso un'interfaccia grafica.
 
+Atom 1.40.1: Editore di testo per scrivere principalmente la documentazione e risolvere conflitti.
+
+NetBeans 11.1: IDE per sviluppare tutto il codice scritto in Java.
 ## Progettazione
 
 Questo capitolo descrive esaustivamente come deve essere realizzato il
