@@ -10,7 +10,7 @@
 |--------------|----------------------------------------------|
 |10:05 - 11:10 | correzione test                              |
 |11:10 - 14:25 |esercizio in classe a coppie                  |
-|14:25 - 14:35 |Discussione orario                                |
+|14:25 - 14:35 |Discussione orario                            |
 |14:35 - 16:10 |programmazione                                |
 |16:10 - 16:30 |Diario                                        |
 
