@@ -51,13 +51,14 @@
 
 ### Informazioni sul progetto
 
-  In questo capitolo raccogliere le informazioni relative al progetto, ad esempio:
-
-  -   Allievo/i e docente/i coinvolti nel progetto e rispettivi ruoli,
-
-  -   CPT Trevano ,Informatica, Progetti+ 306,
-
-  -   inizio 3 settembre termine progetto 20 dicembre 2019
+  - Titolo Progetto: Fiocco di neve
+  -  Docente responsabile: Luca Muggiasca, Geo Petrini
+  -  Allievo responsabili: Alessandro Aloise
+  -  CPT Trevano sezione Informatica
+  -  Classe: I3AA
+  -  Materia: Modulo 306
+  -  Inizio progetto 3 settembre 2019
+  -  Fine progetto  20 dicembre 2019
 
 
 ### Abstract
@@ -112,9 +113,12 @@ GitHub: Punto di riferimento sul quale caricare  il lavoro fatto attraverso i co
 
 GitHub Desktop 2.1.3: Programma per effettuare il push e pull di commit attraverso un'interfaccia grafica.
 
-Atom 1.40.1: Editore di testo per scrivere principalmente la documentazione e risolvere conflitti.
+Atom 1.40.1: Editore di testo per scrivere principalmente la documentazione.
 
 NetBeans 11.1: IDE per sviluppare tutto il codice scritto in Java.
+
+ProjectLibre 1.9.1 software per la gestione di progetti.
+
 ## Progettazione
 
 Questo capitolo descrive esaustivamente come deve essere realizzato il
@@ -245,51 +249,12 @@ facilmente generalizzabili o sono specifici di un caso particolare? ecc
   Migliorie o estensioni che possono essere sviluppate sul prodotto.
 
 ### Considerazioni personali
-  Cosa ho imparato in questo progetto? ecc
+  Questo progetto è stato utile per imparare l'utilizzo dei pannel e a conoscere meglio java dato che abbiamo dovuto utilizzare molte clssi che non conoscevamo e quindi c'é anche stata da parte mia una ricerca per informarsi su che tipo di classi implementare e gestire classi.
 
-## Bibliografia
-
-### Bibliografia per articoli di riviste
-1.  Cognome e nome (o iniziali) dell’autore o degli autori, o nome
-    dell’organizzazione,
-
-2.  Titolo dell’articolo (tra virgolette),
-
-3.  Titolo della rivista (in italico),
-
-4.  Anno e numero
-
-5.  Pagina iniziale dell’articolo,
-
-### Bibliografia per libri
-
-
-1.  Cognome e nome (o iniziali) dell’autore o degli autori, o nome
-    dell’organizzazione,
-
-2.  Titolo del libro (in italico),
-
-3.  ev. Numero di edizione,
-
-4.  Nome dell’editore,
-
-5.  Anno di pubblicazione,
-
-6.  ISBN.
 
 ### Sitografia
 
-1.  URL del sito (se troppo lungo solo dominio, evt completo nel
-    diario),
-
-2.  Eventuale titolo della pagina (in italico),
-
-3.  Data di consultazione (GG-MM-AAAA).
-
-**Esempio:**
-
--   http://standards.ieee.org/guides/style/section7.html, *IEEE
-    Standards Style Manual*, 07-06-2008.
+-   https://stackoverflow.com/, *Stackoverflow*, 11-10-2019.
 
 ## Allegati
 
@@ -297,17 +262,4 @@ Elenco degli allegati, esempio:
 
 -   Diari di lavoro
 
--   Codici sorgente/documentazione macchine virtuali
-
--   Istruzioni di installazione del prodotto (con credenziali
-    di accesso) e/o di eventuali prodotti terzi
-
--   Documentazione di prodotti di terzi
-
--   Eventuali guide utente / Manuali di utilizzo
-
 -   Mandato e/o Qdc
-
--   Prodotto
-
--   …
