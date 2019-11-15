@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,38 +8,84 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
+ * Questo programma genera un fiocco di neve. 
  *
- * @author alesa
+ * @author Alesassandro Aloise
+ * @version 15.11.2019
  */
 public class DrawPanel extends javax.swing.JPanel {
 
-    private List<Point> points = new ArrayList<Point>();
     /**
-     * generazione del poligono.
+     * Lista dei punti messi.
+     */
+    private List<Point> points = new ArrayList<Point>();
+
+    /**
+     * Poligono generato dall'utente.
+     * colore rosso
      */
     private Polygon polygon = new Polygon();
+    
+    /**
+     * Poligono del trettangolo.
+     * colore biano
+     */
+    private Polygon tpolygon = new Polygon();
+    
+    /**
+     * Poligono renderizazione. 
+     * colore giallo
+     */
+    private Polygon rpolygon = new Polygon();
 
-    public Color colore = Color.red;
+    /**
+     * Il colore che ha il poligono generato dall'utente. 
+     */
+    public Color colorePoligono = Color.red;
 
-    public boolean colore1 = true;
-
-    public boolean render = false;
-
+    /**
+     * Flag che gestice la pressione del tsto render.  
+     */
+    public boolean renderTastoFlag = true;
+    
+    /**
+     * Larghezza vecchia dello schermo.
+     * valore di default= 1024.
+     */
     public int larghezzaV = 1024;
+    
+    /**
+     * Altezza vecchia dello schermo.
+     * valore di default= 768. 
+     */
     public int altezzaV = 768;
 
+    /**
+     * Larghezza nuova dello schermo.
+     */
     public int larghezzaN = 0;
+    
+    /**
+     * Altezza nuova dello schermo.
+     */
     public int altezzaN = 0;
 
     /**
-     * Creates new form DrawPanel
+     * Quando abilitato scatena il disegno del nuovo poligono.
+     */
+    public boolean renderFlag = false;
+    
+    /**
+     * Permette o nega l'aggiunta dei punti.
+     */
+    public boolean clickFlag = true;
+
+    /**
+     * Creates new form DrawPanel.
      */
     public DrawPanel() {
         initComponents();
@@ -46,82 +93,166 @@ public class DrawPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Resetta i punti sullo schermo e il cololore dei punti.
+     * Resetta i punti sullo schermo e il cololore dei punti. aggiorna anche il
+     * colore del poligono che passa da rosso a grigio.
      */
     public void reset() {
         points.clear();
+        colorePoligono = Color.red;
+        rpolygon.reset();
+
+        renderTastoFlag=false;
+        toggleRender();
         repaint();
-        colore = Color.red;
     }
 
     /**
-     * Viene invocato quando viene premuto il tasto render modifica il colore
-     * visivo.
+     * Rimuove l'ultimo punto messo.
      */
-    public void render() {
-        if (colore1 == true) {
-            colore = Color.gray;
+    public void rimuoviPunto() {
+        if (points.size() > 3) {
+            points.remove(points.size() - 1);
             repaint();
-            colore1 = false;
-            render = true;
-        } else {
-            colore = Color.red;
-            repaint();
-            colore1 = true;
-            render = false;
         }
+    }
+
+    /**
+     * Viene invocato quando viene premuto il tasto render modifica il colore visivo.
+     */
+    public void toggleRender() {
+        if (renderTastoFlag == true) {
+            colorePoligono = Color.gray;
+            renderFlag = true;
+            clickFlag = false;
+            renderTastoFlag = false;
+        } else {
+            colorePoligono = Color.red;
+            renderFlag = false;
+            clickFlag = true;
+            renderTastoFlag = true;
+        }
+        
+        repaint();
 
     }
 
-    @Override
+    /**
+     * Il paint dell'applicazione.
+     * @param g 
+     */
     public void paintComponent(Graphics g) {
-        Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        Graphics2D g2d = (Graphics2D) g;
+
+        //genero tutti gli oggetti grafici
+        creazioneTriangolo();
+        creazionePoligono();
+        creazioneRender();
+
+        //migliora la grafica 
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setColor(Color.gray);
-        g.fillRect(0, 0, getWidth() / 2, getHeight());
-        g.setColor(Color.WHITE);
-        int npoints = 3;
-        g.fillPolygon(ridimensiomanetoX(), ridimensiomanetoY(), npoints);
+
+        //colora sfondo di grigio
+        g2d.setColor(Color.gray);
+        g2d.fillRect(0, 0, getWidth() / 2, getHeight());
+
+        //disegna tirangolo
+        g2d.setColor(Color.WHITE);
+        g2d.fillPolygon(tpolygon);
+
+        //disegna poligono
+        g2d.setColor(colorePoligono);
+        if (points.size() > 1) {
+            g2d.fillPolygon(polygon);
+        }
+        //diesgna puntini del poligono
+        for (int i = 0; i < points.size(); i++) {
+            g2d.setColor(Color.BLACK);
+            //TODO correggere centro dei cerchi
+            g2d.fillOval(points.get(i).x - 3, points.get(i).y, 6, 6);
+        }
+        if (renderFlag == true) {
+            g2d.setColor(Color.YELLOW);
+            g2d.fill(rpolygon);
+        }
+        
+        System.out.println("--- ");
+        System.out.println("clickFlag "+clickFlag);
+        System.out.println("renderTastoFlag "+renderTastoFlag);
+        System.out.println("renderFlag "+renderFlag);
+        System.out.println("punti "+ points);
+                    
+                    
+                    
+        
+        
+        
+    }
+    /**
+     * Questo metodo si occupa di fare i calcoli per il render del nuovo poligono.
+     */
+    public void creazioneRender() {
+        Area aPoligono = new Area(polygon);
+        Area aTriangolo = new Area(tpolygon);
+        aTriangolo.subtract(aPoligono);
+        rpolygon.reset();
+        PathIterator iterator = aTriangolo.getPathIterator(null);
+        float[] floats = new float[6];
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if (type != PathIterator.SEG_CLOSE) {
+                rpolygon.addPoint(x, y);
+
+            }
+            iterator.next();
+        }
+        //TODO aggiornare rpolygon
+    }
+
+    /**
+     * Questo metodo si occupa di ressettare il poligono e aggiungere i pounti al poligono
+     */
+    public void creazionePoligono() {
+        polygon.reset();
         for (int i = 0; i < points.size(); i++) {
             polygon.addPoint(points.get(i).x, points.get(i).y);
         }
-        g.setColor(colore);
-        for (int i = 0; i < points.size(); i++) {
-            g.fillOval(points.get(i).x - 3, points.get(i).y, 6, 6);
-            if (i > 1) {
-                g.fillPolygon(polygon);
-                this.polygon.reset();
-            }
-        }
     }
 
-    public int[] ridimensiomanetoX() {
+    /**
+     * Metodo che istanzia il poligono triangolo.
+     */
+    public void creazioneTriangolo() {
         // a
         // b é lunga il doppio di a  
         // h é lungua b per 1,7
         int[] x = new int[3];
+        int[] y = new int[3];
         int bordo = getWidth() / 10;
         int a = getWidth() / 4;
         int b = a * 2;
-        double h = b * 1.7;
+        double h = b * 0.8;
         x[0] = bordo;
         x[1] = bordo + a;
         x[2] = bordo;
-        return x;
-    }
-
-    public int[] ridimensiomanetoY() {
-        int a = getWidth() / 4;
-        double h = a * 1.7;
-        int[] y = new int[3];
         y[0] = (getHeight() / 4);
         y[1] = (getHeight() / 4);
         y[2] = (getHeight() / 4 + (int) h);
-        return y;
+        tpolygon.reset();
+        for (int i = 0; i < 3; i++) {
+            tpolygon.addPoint(x[i], y[i]);
+        }
     }
 
+    /**
+     * Calcoli ridimensionamento del poligono.
+     */
     public void ridimensionamentoP() {
+        larghezzaN = this.getWidth();
+        altezzaN = this.getHeight();
+
         int differenzax = 0;
         int differenzay = 0;
         for (int i = 0; i < points.size(); i++) {
@@ -138,21 +269,28 @@ public class DrawPanel extends javax.swing.JPanel {
                 points.get(i).y = points.get(i).y - differenzay / 4;
             }
         }
+        larghezzaV = larghezzaN;
+        altezzaV = altezzaN;
+        repaint();
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
             }
+        });
+        addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+                formAncestorResized(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 formMouseReleased(evt);
             }
@@ -175,33 +313,37 @@ public class DrawPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-
-    }//GEN-LAST:event_formMouseClicked
-
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        if (MouseEvent.BUTTON3 == evt.getButton()) {
-            for (int i = 0; i < points.size(); i++) {
-                if (evt.getPoint() == points.get(i)) {
-                    points.remove(i);
+        if (clickFlag == true) {
+            if (MouseEvent.BUTTON1 == evt.getButton()) {
+                Point p = evt.getPoint();
+                if (p.x < getWidth() / 2) {
+                    this.points.add(evt.getPoint());
                 }
             }
-        } else {
-            Point p = evt.getPoint();
-            if (p.x < getWidth() / 2) {
-                this.points.add(evt.getPoint());
-                repaint();
-            }
         }
+        repaint();
     }//GEN-LAST:event_formMouseReleased
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        larghezzaN = this.getWidth();
-        altezzaN = this.getHeight();
         ridimensionamentoP();
-        larghezzaV = larghezzaN;
-        altezzaV = altezzaN;
+
     }//GEN-LAST:event_formComponentResized
+
+    private void formAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorResized
+        ridimensionamentoP();
+    }//GEN-LAST:event_formAncestorResized
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        if (MouseEvent.BUTTON3 == evt.getButton()) {
+            for (int i = 0; i < points.size(); i++) {
+                if (evt.getPoint().x >= points.get(i).x - 20 || evt.getPoint().x <= points.get(i).x + 20
+                        && evt.getPoint().y >= points.get(i).y - 20 || evt.getPoint().y <= points.get(i).y + 20) {
+                    System.out.println("ciao");
+                }
+            }
+        }
+    }//GEN-LAST:event_formMouseDragged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
