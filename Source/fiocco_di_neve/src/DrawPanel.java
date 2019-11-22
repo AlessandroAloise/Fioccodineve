@@ -5,14 +5,16 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
 
 /**
- * Questo programma genera un fiocco di neve. 
+ * Questo programma genera un fiocco di neve.
  *
  * @author Alesassandro Aloise
  * @version 15.11.2019
@@ -24,43 +26,42 @@ public class DrawPanel extends javax.swing.JPanel {
      */
     private List<Point> points = new ArrayList<Point>();
 
+    public Point[] arraypunti = new Point[1];
+
     /**
-     * Poligono generato dall'utente.
-     * colore rosso
+     * Poligono generato dall'utente. colore rosso
      */
     private Polygon polygon = new Polygon();
-    
+
     /**
-     * Poligono del trettangolo.
-     * colore biano
+     * Poligono del trettangolo. colore biano
      */
     private Polygon tpolygon = new Polygon();
-    
+
     /**
-     * Poligono renderizazione. 
-     * colore giallo
+     * Poligono renderizazione. colore giallo
      */
     private Polygon rpolygon = new Polygon();
 
+    private Polygon afpoligono = new Polygon();
+
     /**
-     * Il colore che ha il poligono generato dall'utente. 
+     * Il colore che ha il poligono generato dall'utente.
      */
     public Color colorePoligono = Color.red;
 
     /**
-     * Flag che gestice la pressione del tsto render.  
+     * Flag che gestice la pressione del tsto render.
      */
     public boolean renderTastoFlag = true;
-    
+
     /**
-     * Larghezza vecchia dello schermo.
-     * valore di default= 1024.
+     * Larghezza vecchia dello schermo. valore di default= 1024.
      */
     public int larghezzaV = 1024;
-    
+
     /**
-     * Altezza vecchia dello schermo.
-     * valore di default= 768. 
+     * Altezza vecchia dello schermo. valore di default= 768.
      */
     public int altezzaV = 768;
 
@@ -68,7 +69,7 @@ public class DrawPanel extends javax.swing.JPanel {
      * Larghezza nuova dello schermo.
      */
     public int larghezzaN = 0;
-    
+
     /**
      * Altezza nuova dello schermo.
      */
@@ -78,7 +79,7 @@ public class DrawPanel extends javax.swing.JPanel {
      * Quando abilitato scatena il disegno del nuovo poligono.
      */
     public boolean renderFlag = false;
-    
+
     /**
      * Permette o nega l'aggiunta dei punti.
      */
@@ -101,7 +102,7 @@ public class DrawPanel extends javax.swing.JPanel {
         colorePoligono = Color.red;
         rpolygon.reset();
 
-        renderTastoFlag=false;
+        renderTastoFlag = false;
         toggleRender();
         repaint();
     }
@@ -117,7 +118,8 @@ public class DrawPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Viene invocato quando viene premuto il tasto render modifica il colore visivo.
+     * Viene invocato quando viene premuto il tasto render modifica il colore
+     * visivo.
      */
     public void toggleRender() {
         if (renderTastoFlag == true) {
@@ -131,14 +133,13 @@ public class DrawPanel extends javax.swing.JPanel {
             clickFlag = true;
             renderTastoFlag = true;
         }
-        
         repaint();
-
     }
 
     /**
      * Il paint dell'applicazione.
-     * @param g 
+     *
+     * @param g
      */
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -169,27 +170,23 @@ public class DrawPanel extends javax.swing.JPanel {
         for (int i = 0; i < points.size(); i++) {
             g2d.setColor(Color.BLACK);
             //TODO correggere centro dei cerchi
-            g2d.fillOval(points.get(i).x - 3, points.get(i).y, 6, 6);
+            g2d.fillOval(points.get(i).x - 3, points.get(i).y - 3, 6, 6);
         }
         if (renderFlag == true) {
             g2d.setColor(Color.YELLOW);
             g2d.fill(rpolygon);
         }
-        
-        System.out.println("--- ");
-        System.out.println("clickFlag "+clickFlag);
-        System.out.println("renderTastoFlag "+renderTastoFlag);
-        System.out.println("renderFlag "+renderFlag);
-        System.out.println("punti "+ points);
-                    
-                    
-                    
-        
-        
-        
+        g2d.setColor(Color.PINK);
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(90), rpolygon.xpoints[0], rpolygon.ypoints[0]);
+        Shape transformed = transform.createTransformedShape(rpolygon);
+        g2d.fill(transformed);
+
     }
+
     /**
-     * Questo metodo si occupa di fare i calcoli per il render del nuovo poligono.
+     * Questo metodo si occupa di fare i calcoli per il render del nuovo
+     * poligono.
      */
     public void creazioneRender() {
         Area aPoligono = new Area(polygon);
@@ -204,15 +201,14 @@ public class DrawPanel extends javax.swing.JPanel {
             int y = (int) floats[1];
             if (type != PathIterator.SEG_CLOSE) {
                 rpolygon.addPoint(x, y);
-
             }
             iterator.next();
         }
-        //TODO aggiornare rpolygon
     }
 
     /**
-     * Questo metodo si occupa di ressettare il poligono e aggiungere i pounti al poligono
+     * Questo metodo si occupa di ressettare il poligono e aggiungere i pounti
+     * al poligono
      */
     public void creazionePoligono() {
         polygon.reset();
@@ -241,6 +237,7 @@ public class DrawPanel extends javax.swing.JPanel {
         y[1] = (getHeight() / 4);
         y[2] = (getHeight() / 4 + (int) h);
         tpolygon.reset();
+
         for (int i = 0; i < 3; i++) {
             tpolygon.addPoint(x[i], y[i]);
         }
@@ -252,7 +249,6 @@ public class DrawPanel extends javax.swing.JPanel {
     public void ridimensionamentoP() {
         larghezzaN = this.getWidth();
         altezzaN = this.getHeight();
-
         int differenzax = 0;
         int differenzay = 0;
         for (int i = 0; i < points.size(); i++) {
@@ -272,6 +268,21 @@ public class DrawPanel extends javax.swing.JPanel {
         larghezzaV = larghezzaN;
         altezzaV = altezzaN;
         repaint();
+    }
+
+
+    public void getPolygon(Point[] points) {
+        for (int i = 0; i < points.length; i++) {
+            afpoligono.addPoint((points[i].x), (points[i].y));
+        }
+    }
+
+    public Point[] convertToArray(List<Point> list) {
+        Point[] array = new Point[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i);
+        }
+        return array;
     }
 
     @SuppressWarnings("unchecked")
@@ -327,7 +338,6 @@ public class DrawPanel extends javax.swing.JPanel {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         ridimensionamentoP();
-
     }//GEN-LAST:event_formComponentResized
 
     private void formAncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formAncestorResized
@@ -339,7 +349,6 @@ public class DrawPanel extends javax.swing.JPanel {
             for (int i = 0; i < points.size(); i++) {
                 if (evt.getPoint().x >= points.get(i).x - 20 || evt.getPoint().x <= points.get(i).x + 20
                         && evt.getPoint().y >= points.get(i).y - 20 || evt.getPoint().y <= points.get(i).y + 20) {
-                    System.out.println("ciao");
                 }
             }
         }

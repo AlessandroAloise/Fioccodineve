@@ -38,6 +38,7 @@ public class FioccoDiNeve extends java.awt.Frame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(1072, 789));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
@@ -55,7 +56,7 @@ public class FioccoDiNeve extends java.awt.Frame {
         drawPanel1.setLayout(drawPanel1Layout);
         drawPanel1Layout.setHorizontalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGap(0, 3072, Short.MAX_VALUE)
         );
         drawPanel1Layout.setVerticalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
