@@ -26,8 +26,6 @@ public class DrawPanel extends javax.swing.JPanel {
      */
     private List<Point> points = new ArrayList<Point>();
 
-    public Point[] arraypunti = new Point[1];
-
     /**
      * Poligono generato dall'utente. colore rosso
      */
@@ -42,8 +40,6 @@ public class DrawPanel extends javax.swing.JPanel {
      * Poligono renderizazione. colore giallo
      */
     private Polygon rpolygon = new Polygon();
-
-    private Polygon afpoligono = new Polygon();
 
     /**
      * Il colore che ha il poligono generato dall'utente.
@@ -175,12 +171,48 @@ public class DrawPanel extends javax.swing.JPanel {
         if (renderFlag == true) {
             g2d.setColor(Color.YELLOW);
             g2d.fill(rpolygon);
+
+            // fase di prova
+            g2d.setColor(Color.green);
+            AffineTransform transform1 = new AffineTransform();
+            AffineTransform transform2 = new AffineTransform();
+            AffineTransform transform3 = new AffineTransform();
+            AffineTransform transform12 = new AffineTransform();
+            
+   
+            
+            transform1.rotate(Math.toRadians(0), tpolygon.xpoints[2], tpolygon.ypoints[2]);
+            transform3.rotate(Math.toRadians(60), tpolygon.xpoints[2], tpolygon.ypoints[2]);
+            transform12.rotate(Math.toRadians(0), tpolygon.xpoints[2], tpolygon.ypoints[2]);
+            //transform2.rotate(Math.toRadians(60), tpolygon.xpoints[2], tpolygon.ypoints[2]);
+
+            transform1.translate(700, 150);
+            transform12.translate(805, 150);
+            transform3.translate(250,-450);
+
+            transform1.scale(0.5, 0.5);
+             transform3.scale(0.5, 0.5);
+            //transform2.scale(0.5, 0.5);
+            transform12.scale(-0.5, 0.5);
+
+
+            Shape transformed1 = transform1.createTransformedShape(rpolygon);
+            //Shape transformed2 = transform2.createTransformedShape(rpolygon);
+            Shape transformed12 = transform12.createTransformedShape(rpolygon);
+            Shape transformed3 = transform3.createTransformedShape(rpolygon);
+
+
+            g2d.fill(transformed1);
+            g2d.fill(transformed12);
+
+            g2d.setColor(Color.CYAN);
+            g2d.fill(transformed3);
+
+
+
+            
+
         }
-        g2d.setColor(Color.PINK);
-        AffineTransform transform = new AffineTransform();
-        transform.rotate(Math.toRadians(90), rpolygon.xpoints[0], rpolygon.ypoints[0]);
-        Shape transformed = transform.createTransformedShape(rpolygon);
-        g2d.fill(transformed);
 
     }
 
@@ -268,21 +300,6 @@ public class DrawPanel extends javax.swing.JPanel {
         larghezzaV = larghezzaN;
         altezzaV = altezzaN;
         repaint();
-    }
-
-
-    public void getPolygon(Point[] points) {
-        for (int i = 0; i < points.length; i++) {
-            afpoligono.addPoint((points[i].x), (points[i].y));
-        }
-    }
-
-    public Point[] convertToArray(List<Point> list) {
-        Point[] array = new Point[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            array[i] = list.get(i);
-        }
-        return array;
     }
 
     @SuppressWarnings("unchecked")
