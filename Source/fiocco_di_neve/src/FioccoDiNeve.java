@@ -1,26 +1,78 @@
-import java.awt.Graphics;
-import java.awt.Point;
+
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author alesa
  */
 public class FioccoDiNeve extends java.awt.Frame {
-    
+
+    /**
+     * Cosa nel metodo salva deve fare
+     * 1 = salva png
+     * 2 = salva punti
+     * default = svg
+     */
+    public int scelta = 1;
+
+    public int dimensione = 0;
 
     /**
      * Creates new form FioccoDiNeve
      */
     public FioccoDiNeve() {
-        
+
         this.setTitle("Fiocco di neve");
         initComponents();
+    }
+
+    public void salva(String titolo, String estenzione, String operazione, int scelta) {
+        JFileChooser open = new JFileChooser();
+        File directory = new File("Fiocchi di neve");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        open.setCurrentDirectory(directory);
+        FileNameExtensionFilter fn = new FileNameExtensionFilter(titolo, estenzione);
+        open.setFileFilter(fn);
+        open.showDialog(null, operazione);
+        switch (scelta) {
+            case 1:
+                try {
+                    String handle = open.getSelectedFile().toPath().toString() + "." + estenzione;
+                    System.out.println(handle);
+                    File handleFile = new File(handle);
+                    drawPanel1.serialize(handleFile);
+                } catch (NullPointerException npe) {
+                    System.out.println("Closed");
+                }
+                break;
+            case 2:
+                try {
+                    String file = open.getSelectedFile().toPath().toString();
+                    this.drawPanel1.salvaPng(file, dimensione);
+                } catch (NullPointerException | IOException e) {
+                }
+                break;
+
+            default:
+                try {
+                    String handle = open.getSelectedFile().toPath().toString() + ".svg";
+                    drawPanel1.generateSVG(handle);
+                } catch (NullPointerException npe) {
+                }
+                break;
+        }
+
     }
 
     /**
@@ -31,21 +83,31 @@ public class FioccoDiNeve extends java.awt.Frame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         drawPanel1 = new DrawPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
+        render = new javax.swing.JButton();
+        rimuoviPunti = new javax.swing.JButton();
+        salvaPunti = new javax.swing.JButton();
+        svg = new javax.swing.JButton();
+        salvaPng = new javax.swing.JComboBox<>();
 
-        setPreferredSize(new java.awt.Dimension(1072, 789));
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
             }
         });
 
-        drawPanel1.setMinimumSize(new java.awt.Dimension(1024, 768));
+        drawPanel1.setPreferredSize(new java.awt.Dimension(1024, 768));
         drawPanel1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 drawPanel1ComponentResized(evt);
@@ -56,60 +118,82 @@ public class FioccoDiNeve extends java.awt.Frame {
         drawPanel1.setLayout(drawPanel1Layout);
         drawPanel1Layout.setHorizontalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 3072, Short.MAX_VALUE)
+            .addGap(0, 1024, Short.MAX_VALUE)
         );
         drawPanel1Layout.setVerticalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 768, Short.MAX_VALUE)
+            .addGap(0, 771, Short.MAX_VALUE)
         );
 
-        add(drawPanel1, java.awt.BorderLayout.CENTER);
+        add(drawPanel1, java.awt.BorderLayout.WEST);
 
         jToolBar1.setRollover(true);
+        jToolBar1.setMinimumSize(new java.awt.Dimension(1024, 21));
 
-        jButton1.setText("Indietro");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        reset.setText("Reset");
+        reset.setFocusable(false);
+        reset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        reset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                resetActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(reset);
 
-        jButton2.setText("Reset");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        render.setText("Render");
+        render.setFocusable(false);
+        render.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        render.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        render.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                renderActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(render);
 
-        jButton3.setText("Render");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        rimuoviPunti.setText("Rimuovi punto");
+        rimuoviPunti.setFocusable(false);
+        rimuoviPunti.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        rimuoviPunti.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        rimuoviPunti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                rimuoviPuntiActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton3);
+        jToolBar1.add(rimuoviPunti);
 
-        jButton4.setText("Rimuovi punto");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        salvaPunti.setText("Salva i punti ");
+        salvaPunti.setFocusable(false);
+        salvaPunti.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        salvaPunti.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        salvaPunti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                salvaPuntiActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton4);
+        jToolBar1.add(salvaPunti);
+
+        svg.setText("SVG ");
+        svg.setFocusable(false);
+        svg.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        svg.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        svg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                svgActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(svg);
+
+        salvaPng.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Salva PNG", "500 px", "1000 px", "dimensioni attuali" }));
+        salvaPng.setMaximumSize(new java.awt.Dimension(100, 32767));
+        salvaPng.setMinimumSize(new java.awt.Dimension(10, 19));
+        salvaPng.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvaPngActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(salvaPng);
 
         add(jToolBar1, java.awt.BorderLayout.NORTH);
 
@@ -127,22 +211,43 @@ public class FioccoDiNeve extends java.awt.Frame {
         // TODO add your handling code here:
     }//GEN-LAST:event_drawPanel1ComponentResized
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       drawPanel1.reset();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void salvaPuntiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaPuntiActionPerformed
+        salva("nowflake file (*.snowflake)", "snowflake", "Salva punti", 1);
+    }//GEN-LAST:event_salvaPuntiActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       this.setVisible(false);
-        new StartFrame().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        drawPanel1.toggleRender();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void rimuoviPuntiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rimuoviPuntiActionPerformed
         drawPanel1.rimuoviPunto();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_rimuoviPuntiActionPerformed
+
+    private void renderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renderActionPerformed
+        drawPanel1.toggleRender();
+    }//GEN-LAST:event_renderActionPerformed
+
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        Object[] opsioni = {"SI", "NO"};
+        int response = JOptionPane.showOptionDialog(null,
+                "Sei sicuro di voler ripristinare?", "Attenzione",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, opsioni, opsioni[0]);
+        if (JOptionPane.YES_OPTION == response) {
+            drawPanel1.reset();
+        }
+    }//GEN-LAST:event_resetActionPerformed
+
+    private void salvaPngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaPngActionPerformed
+        if (salvaPng.getSelectedItem().equals("500 px")) {
+            dimensione = 500;
+        } else if (salvaPng.getSelectedItem().equals("1000 px")) {
+            dimensione = 1000;
+        } else if (salvaPng.getSelectedItem().equals("dimensioni attuali")) {
+            dimensione = this.getHeight();
+        }
+        salva("PNG (*.png)", "PNG", "Salva PNG", 2);
+    }//GEN-LAST:event_salvaPngActionPerformed
+
+    private void svgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svgActionPerformed
+        salva("SVG File (*.svg)", "SVG", "Salva SVG",0);
+    }//GEN-LAST:event_svgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,16 +259,26 @@ public class FioccoDiNeve extends java.awt.Frame {
             }
         });
     }
-    
-  
 
+    public FioccoDiNeve(boolean loader, String handle) {
+        initComponents();
+        if (loader) {
+            File handleFile = new File(handle);
+            drawPanel1.deSerialize(handleFile);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private DrawPanel drawPanel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton render;
+    private javax.swing.JButton reset;
+    private javax.swing.JButton rimuoviPunti;
+    private javax.swing.JComboBox<String> salvaPng;
+    private javax.swing.JButton salvaPunti;
+    private javax.swing.JButton svg;
     // End of variables declaration//GEN-END:variables
 }
