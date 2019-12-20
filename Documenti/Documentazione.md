@@ -144,8 +144,8 @@ Per poter facilitare il più possibile la realizzazione del programma è stata s
 
 ### Design delle interfacce
 
-[Start page](../Img/startframe.png)<br>
-[Cat page](../Img/taglio.PNG)<br>
+[Start page](Img/startframe.png)<br>
+[Cat page](Img/taglio.PNG)<br>
 
 Le interfaccie WEB sono state praticamente tutte modificate alla fine del progetto, per i seguenti motivi:<br>
 - <b>Start page</b>: all'interno della start page possiamno trovare due tasti uno che ci permette di caricare un modello di punti già esistente e un tasto per creare un fiocco di neve nuovo sull'lato destro invece possiamo trovare 3 fiocchi che sono stati messi come modello di default ci bastera cliccare sopra uno di questi per accedere alla sua conformazione e modificarla.
@@ -155,7 +155,7 @@ Le interfaccie WEB sono state praticamente tutte modificate alla fine del proget
 
 ### Design
 
-[Diagramma uml](../Img/diagramma.png)<br>
+[Diagramma uml](Img/diagramma.png)<br>
 
 ## Implementazione
 
