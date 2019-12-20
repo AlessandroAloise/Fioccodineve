@@ -8,4 +8,6 @@ Iniziato il: 06.09.19
 
 Data di consegna: 20.12.2019
 
-- [Quaderno dei compiti](https://github.com/AlessandroAloise/Fioccodineve-/tree/master/Diario)
+- [Quaderno dei compiti](https://github.com/AlessandroAloise/Fioccodineve/tree/master/Diario)
+
+- [Sito Web](http://samtinfo.ch/i17aloale/)

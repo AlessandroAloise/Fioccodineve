@@ -63,7 +63,7 @@
 
 ### Abstract
 
-Il progetto è gestito e realizzato dal'alievo (studente di informatica all’Arti e Mestieri di Trevano) sotto la supervisione del professor Luca Muggiasca e  Geo Petrini. Il progetto é realizzare un applicazione java che permette di generale manualmente un fiocco di neve . La realizzazione del progetto inizia il 03 settembre 2019 (03/09/19) e dovrà essere consegnato entro il 20 dicembre 2019 (20/12/19).
+Il progetto è gestito e realizzato dall'alievo Alessandro Aloise (studente di informatica all’Arti e Mestieri di Trevano) sotto la supervisione del professor Luca Muggiasca e  Geo Petrini. Il progetto é realizzare un applicazione java che permette di generale manualmente un fiocco di neve . La realizzazione del progetto inizia il 03 settembre 2019 (03/09/19) e dovrà essere consegnato entro il 20 dicembre 2019 (20/12/19).
 
 
 
@@ -87,17 +87,18 @@ dall'utente.
 | REQ_003 | Sito web | Parametri minimi che il pc deve avere | 4 |1.0 |
 | REQ_004 | Programma | Il triangolo occupa sempre il 50% della finestra  | 1 |1.0 |
 | REQ_005 | Programma | I punti di taglio sono da inserire con click del mouse | 1 |1.0 |
-| REQ_005 | Programma | Tasto per la cancellazione dei punti messi  |2 |1.0 |
-| REQ_006 | Programma | Bottone genera che non salva ma mostra solo l'anteprima  |2 |1.0 |
-| REQ_007 | Esportazione |L'applicazione deve permettere di esportare il fiocco in raster con dimensioni selezionabili, il formato consigliato è PNG |2 |1.0 |
-| REQ_008 | Esportazione |Dimensioni che può avere PNG 500 o 1000 o quella attuale |2 |1.0 |
-| REQ_009 | Salvataggio |Scelta del formato da salvare per l'immagine del fiocco |2 |1.0 |
-| REQ_010 | Esportazione |Creazione "snapshot" del fiocco per poterlo modificare |2 |1.0 |
-| REQ_011 | Salvataggio |Salvataggio dei triangoli modificati in CSV |2 |1.0 |
-| REQ_012 | Sito web | Menù con le varie cose a sinistra |2 |1.0 |
-| REQ_013 | Sito web | Menù del programma con fiocchi recenti  |1 |1.0 |
-| REQ_014 | Sito web + | imagini dei fiocchi di neve recenti  |3 |1.0 |
-| REQ_015 | Sito web | Fornire .class in github ma per gli utenti fornire il jar  |2 |1.0 |
+| REQ_006 | Programma | Tasto per la cancellazione dei punti messi  |2 |1.0 |
+| REQ_007 | Programma | Bottone genera il fiocco di neve  |2 |1.0 |
+| REQ_008 | Esportazione |L'applicazione deve permettere di esportare il fiocco in formato  PNG |2 |1.0 |
+| REQ_009 | Esportazione |Dimensioni che può avere PNG 500 o 1000 o quella attuale |2 |1.0 |
+| REQ_010 | Esportazione |L'applicazione deve permettere di esportare il fiocco in formato  SVG |2 |1.0 |
+| REQ_011 | Esportazione |Creazione "snapshot" del fiocco per poterlo modificare |2 |1.0 |
+| REQ_012 | Programma | Menù del programma con fiocchi default  |1 |1.0 |
+| REQ_013 | Sito web + | imagini dei fiocchi di neve recenti  |3 |1.0 |
+| REQ_014 | Sito web | Fornire .class in github ma per gli utenti fornire il jar  |2 |1.0 |
+
+
+I + sono cose previste come extra.
 
 
 
@@ -121,80 +122,48 @@ ProjectLibre 1.9.1 software per la gestione di progetti.
 
 ## Progettazione
 
-Questo capitolo descrive esaustivamente come deve essere realizzato il
-prodotto fin nei suoi dettagli. Una buona progettazione permette
-all’esecutore di evitare fraintendimenti e imprecisioni
-nell’implementazione del prodotto.
+Il software sarà sviluppato in maniera che il triangolo da tagliare sarà sempre al centro. oltre ciò saranno disponibili i seguenti bottoni:<br>
+
+| Nome | Componente | utilizzo|
+|---|-----|---|
+|Render|Bottone| permette di renderezare il fiocco di neve |
+|Reset|Bottone| Eliminazione di tutti i punti inseriti e resseta anche la visuale |
+|SVG |Bottone|ci permette di cresre un file con estenzione svg del fiocco di neve|
+|Salva punti|Bottone | ci permete di salvare i punti del poligno crato dai tagli dell'utente.
+|Save PNG|Bottone|Salvataggio del fiocco generato come immagine  PNG (in dimensioni aatuali, 500px x 500px o 100px x 1000px)
 
 ### Design dell’architettura del sistema
 
-Descrive:
-
--   La struttura del programma/sistema lo schema di rete...
-
--   Gli oggetti/moduli/componenti che lo compongono.
-
--   I flussi di informazione in ingresso ed in uscita e le
-    relative elaborazioni. Può utilizzare *diagrammi di flusso dei
-    dati* (DFD).
-
--   Eventuale sitemap
+- diagamramma uml da mettere
 
 ### Design dei dati e database
 
-Descrizione delle strutture di dati utilizzate dal programma in base
-agli attributi e le relazioni degli oggetti in uso.
+Per poter facilitare il più possibile la realizzazione del programma è stata sviluppata una classe chiamata DrawPanel che permette di gestire in modo autonomo tutte le azzion che vengono svolte sul triangolo.
 
-### Schema E-R, schema logico e descrizione.
 
-Se il diagramma E-R viene modificato, sulla doc dovrà apparire l’ultima
-versione, mentre le vecchie saranno sui diari.
 
 ### Design delle interfacce
 
-Descrizione delle interfacce interne ed esterne del sistema e
-dell’interfaccia utente. La progettazione delle interfacce è basata
-sulle informazioni ricavate durante la fase di analisi e realizzata
-tramite mockups.
+[Start page](../Img/startframe.png)<br>
+[Cat page](../Img/taglio.PNG)<br>
 
-### Design procedurale
+Le interfaccie WEB sono state praticamente tutte modificate alla fine del progetto, per i seguenti motivi:<br>
+- <b>Start page</b>: all'interno della start page possiamno trovare due tasti uno che ci permette di caricare un modello di punti già esistente e un tasto per creare un fiocco di neve nuovo sull'lato destro invece possiamo trovare 3 fiocchi che sono stati messi come modello di default ci bastera cliccare sopra uno di questi per accedere alla sua conformazione e modificarla.
 
-Descrive i concetti dettagliati dell’architettura/sviluppo utilizzando
-ad esempio:
+- <b>Cat page</b>: la pagina di creaazione del fiocco di neve e anche dove troviamo la barra per le farie funzioni salvatagglio render esportazione dei punti.lo schermo é diviso a metà sull'lato sinistro abbiamo il triangolo dove possiamo effeturare i tagli e nella parte destra invee troviamo il fiocco di neve renderizazo solo dopo però aver premputo il tasto render
 
--   Diagrammi di flusso e Nassi.
 
--   Tabelle.
+### Design
 
--   Classi e metodi.
-
--   Tabelle di routing
-
--   Diritti di accesso a condivisioni …
-
-Questi documenti permetteranno di rappresentare i dettagli procedurali
-per la realizzazione del prodotto.
+[Diagramma uml](../Img/diagramma.png)<br>
 
 ## Implementazione
 
-In questo capitolo dovrà essere mostrato come è stato realizzato il
-lavoro. Questa parte può differenziarsi dalla progettazione in quanto il
-risultato ottenuto non per forza può essere come era stato progettato.
+ - <b>StartFrame: </b>Questa classe è stata sviluppata per fare in modo che si possono caricare file solo con estenzione (Snowflake) oppure avviare una nuova sessione di creazione di fiocchi di neve o in alternativa si può usufruire dei fiocchi di default che si trovano sulla destra della pagina.
 
-Sulla base di queste informazioni il lavoro svolto dovrà essere
-riproducibile.
+- <b>FioccoDiNeve: </b> Questa classe é un frame che contiene il pannello descritto sotto in più al suo interno ha anche una barra che ci peremtte di fare varie funzioni come salvare in png, salvare in svg, salvare i punti e anche resettare tutto quello che stiamo facendo con la presenza anche di un pop up.
 
-In questa parte è richiesto l’inserimento di codice sorgente/print
-screen di maschere solamente per quei passaggi particolarmente
-significativi e/o critici.
-
-Inoltre dovranno essere descritte eventuali varianti di soluzione o
-scelte di prodotti con motivazione delle scelte.
-
-Non deve apparire nessuna forma di guida d’uso di librerie o di
-componenti utilizzati. Eventualmente questa va allegata.
-
-Per eventuali dettagli si possono inserire riferimenti ai diari.
+- <b>DrawPanel: </b> Per quanto riguarda questa classe si tratta di un panel dove viene svolto in 90% dell'lavoro a qui al suio interno si trova tutta la logica per la gestione del posizionamento del triango delle sue grandezze del rendere e di come genereare e salvare il fiocco di neve.
 
 ## Test
 
@@ -205,15 +174,142 @@ garantire l’adempimento delle richieste formulate nei requisiti. I test
 fungono da garanzia di qualità del prodotto. Ogni test deve essere
 ripetibile alle stesse condizioni.
 
-
-|Test Case      | TC-001                               |
+|Test Case      | TC_001                               |
 |---------------|--------------------------------------|
-|**Nome**       |Import a card, but not shown with the GUI |
-|**Riferimento**|REQ-012                               |
-|**Descrizione**|Import a card with KIC, KID and KIK keys with no obfuscation, but not shown with the GUI |
-|**Prerequisiti**|Store on local PC: Profile\_1.2.001.xml (appendix n\_n) and Cards\_1.2.001.txt (appendix n\_n) |
-|**Procedura**     | - Go to “Cards manager” menu, in main page click “Import Profiles” link, Select the “1.2.001.xml” file, Import the Profile - Go to “Cards manager” menu, in main page click “Import Cards” link, Select the “1.2.001.txt” file, Delete the cards, Select the “1.2.001.txt” file, Import the cards |
-|**Risultati attesi** |Keys visible in the DB (OtaCardKey) but not visible in the GUI (Card details) |
+|**Nome**       |Creare un sito per scaricare l'applicativo |
+|**Riferimento**|REQ-001                                 |
+|**Descrizione**|avviare il sito web e provare a scaricare il file|
+|**Prerequisiti**|avere il sito|
+|**Procedura**     | avviare il sito e cliccare il tasto download |
+|**Risultati attesi** |che il sito funzioni e che ci faccia scaricare il zip |
+|**Risultati**|Il sito  rispetta le aspettative e quindi la sua grandezzua può andare sotto quella definita|
+
+
+|Test Case      | TC_002                               |
+|---------------|--------------------------------------|
+|**Nome**       |Descrizione del progetto sul sito |
+|**Riferimento**|REQ-002                                 |
+|**Descrizione**|avviare il sito e leggere la descrione|
+|**Prerequisiti**|avere il sito|
+|**Procedura**     | avviare il sito. |
+|**Risultati attesi** |trovare la descrione sul sito web  |
+|**Risultati**|Il sito  rispetta le aspettative e quindi la sua grandezzua può andare sotto quella definita|
+
+|Test Case      | TC_003                               |
+|---------------|--------------------------------------|
+|**Nome**       |Parametri minimi che il pc deve avere |
+|**Riferimento**|REQ-003                                 |
+|**Descrizione**|avviare il sito e leggere i requisiti|
+|**Prerequisiti**|avere il sito|
+|**Procedura**     | avviare il sito. |
+|**Risultati attesi** |trovare i requisiti sul sito web  |
+|**Risultati**|Il sito  rispetta le aspettative e quindi la sua grandezzua può andare sotto quella definita|
+|**Come è stato risolto**| Risolvere |
+
+|Test Case      | TC_004                               |
+|---------------|--------------------------------------|
+|**Nome**       |dimensione triangolo |
+|**Riferimento**|REQ-004                                 |
+|**Descrizione**|Provare a rimpicciolire la finestra |
+|**Prerequisiti**|Impostare dimensione minima |
+|**Procedura**     | Fare partire il programma e provare a  rimpicciolire. |
+|**Risultati attesi** |Il programma dovrebbe rimanere con una dimensione minima di 1024x768 |
+|**Risultati**|Il programma  non rispetta le aspettative e quindi la sua grandezzua può andare sotto quella definita|
+|**Come è stato risolto**| Risolvere |
+
+
+|Test Case      | TC_005                               |
+|---------------|--------------------------------------|
+|**Nome**       |I punti di taglio sono da inserire con click del mouse |
+|**Riferimento**|REQ-005                                 |
+|**Descrizione**|Provare a mettere dei punti di taglio |
+|**Prerequisiti**|avere il triangolo su qui provare |
+|**Procedura**     | Fare partire il programma e provare a  tagliare il trangolo. |
+|**Risultati attesi** |dovrebber apparire dei puntini a schermo |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+
+|Test Case      | TC_006                             |
+|---------------|--------------------------------------|
+|**Nome**       |Tasto per la cancellazione dei punti messi |
+|**Riferimento**|REQ-006                                 |
+|**Descrizione**|Provare a mettere dei punti di taglio  e poi premere il tasto rest |
+|**Prerequisiti**|avere il triangolo su qui provare  e riuscire a mettere i punti |
+|**Procedura**     | Fare partire il programma e provare a  tagliare il trangolo e poi premere il tasto . |
+|**Risultati attesi** |dovremmo vedere sparire i punti dallo schermo |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+|Test Case      | TC_007                            |
+|---------------|--------------------------------------|
+|**Nome**       |Bottone genera il fiocco di neve  |
+|**Riferimento**|REQ-007                                |
+|**Descrizione**|Provare a mettere dei punti di taglio e poi a cliccare il tasto render |
+|**Prerequisiti**|avere il triangolo su qui provare  e riuscire a mettere i punti |
+|**Procedura**     | Fare partire il programma e provare a  tagliare il trangolo e poi premere il tasto . |
+|**Risultati attesi** |dovremmo vedere sull'lato destro il fiocco generato |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+|Test Case      | TC_008 / TC_009                          |
+|---------------|--------------------------------------|
+|**Nome**       |PNG  |
+|**Riferimento**|REQ-008                               |
+|**Descrizione**|il porogramma permette di esportare il fiocco in png in 3 grandezze diverse 500px x500px oppure 100px x 1000px o le dimensioni attuali del fiocco |
+|**Prerequisiti**|riuscure a creare il fiocco  |
+|**Procedura**     | Fare partire il programma e provare a  tagliare il trangolo e poi premere il tasto di rendere e dopo il tasto per salvare in png . |
+|**Risultati attesi** |si crea un cartella fiocco di neve da dove é stato avviato il porogramma e al suo interno si salva l'imagine |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+
+|Test Case      | TC_010                       |
+|---------------|--------------------------------------|
+|**Nome**       |SVG |
+|**Riferimento**|REQ-010                              |
+|**Descrizione**|il porogramma permette di esportare il fiocco in SVG |
+|**Prerequisiti**|riuscure a creare il fiocco  |
+|**Procedura**     | Fare partire il programma e provare a  tagliare il trangolo e poi premere il tasto di rendere e dopo il tasto per salvare in svg . |
+|**Risultati attesi** |si crea un cartella fiocco di neve da dove é stato avviato il porogramma e al suo interno si salva l'imagine |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+
+|Test Case      | TC_011                      |
+|---------------|--------------------------------------|
+|**Nome**       |salvataggio punti |
+|**Riferimento**|REQ-011                              |
+|**Descrizione**|il porogramma permette di esportare il salvataggio dei punti. |
+|**Prerequisiti**|riuscure a creare il fiocco  |
+|**Procedura**     | Fare partire il programma e provare a  tagliare il trangolo e poi premere il tasto di rendere e dopo il tasto per salvare i putni . |
+|**Risultati attesi** |si crea un cartella fiocco di neve da dove é stato avviato il porogramma e al suo interno si salva il file con estenzione Snowflake. |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+
+|Test Case      | TC_012                      |
+|---------------|--------------------------------------|
+|**Nome**       |fiocchi di default |
+|**Riferimento**|REQ-012                              |
+|**Descrizione**|il programma deve avere dei fiocchi di neve di default. |
+|**Prerequisiti**|avere il programma funzionante |
+|**Procedura**     | Fare partire il programma e cliccare uno dei fiocchi sulla destra 1 volta e vedere cosa succede . |
+|**Risultati attesi** |si apre la schermata dove vediamo il trangolo con i punti di taglio. |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
+
+
+|Test Case      | TC_014                      |
+|---------------|--------------------------------------|
+|**Nome**       |jar e class  |
+|**Riferimento**|REQ-014                              |
+|**Descrizione**|su github ci deve eseere il programma e sul sito ci deve essere il jar. |
+|**Prerequisiti**|avere il programma funzionante  e avere il sito|
+|**Procedura**     | andare sul mio github e vedere se c'é tutto, andare sul sito e scaricare il file. |
+|**Risultati attesi** |che su GitHub ci sia tutto e che il sito faccio scaricare. |
+|**Risultati**|Il programma si comporta come ci si aspettava |
+|**Come è stato risolto**| - |
 
 
 ### Risultati test
@@ -226,27 +322,19 @@ l’errore con eventuali ipotesi di correzione.
 
 ### Mancanze/limitazioni conosciute
 
-Descrizione con motivazione di eventuali elementi mancanti o non
-completamente implementati, al di fuori dei test case. Non devono essere
-riportati gli errori e i problemi riscontrati e poi risolti durante il
-progetto.
+Le uncihe mancanze del programma sono  l'aggiunta di più poligoni e la motivazione del percé non lo messo é:il programma non lo permette per come è stato pensato dall'inizio.
+L'alra limitazione é che quando si salva in png le imagini sono sgrante perché per la generazione delle imagini prima lo disegno e poi lo ingrandisco cosi facendo perdo qualità e causa quelle inprecisione che si trovano nel disegno.
 
 ## Consuntivo
 
-Consuntivo del tempo di lavoro effettivo e considerazioni riguardo le
-differenze rispetto alla pianificazione (cap 1.7) (ad esempio Gannt
-consuntivo).
+La pianificazione era sicuramente fatta in maniera  sbagliata, i tempi erano irrelaistici per le consocenze che avevo dato che quasi tutte le informazioni le abbiamo dovuto cercare. Oltre al tempo a disposizione ho dovuto sfruttare del tempon aggiuntivo, soprattutto a causa che alcune lezioni sono saltate per altri impegni scolastici.
 
 ## Conclusioni
 
-Quali sono le implicazioni della mia soluzione? Che impatto avrà?
-Cambierà il mondo? È un successo importante? È solo un’aggiunta
-marginale o è semplicemente servita per scoprire che questo percorso è
-stato una perdita di tempo? I risultati ottenuti sono generali,
-facilmente generalizzabili o sono specifici di un caso particolare? ecc
+Con questo progetto ho imparato pian piano a gestire un progetto al meglio dato che non avevo la minima idea da che parte iniziare.Penso che da questo progetto ne esco più colto e accultruato e sicuramentre sapro gestire meglio il prossimo progetto.
 
 ### Sviluppi futuri
-  Migliorie o estensioni che possono essere sviluppate sul prodotto.
+In futuro si possono aggiugnere i requisiti non ancoa sviluppati esempio quello dei più poligoni. Magari si potrebbe anche ottimizare del codice anche se ho già cercato di fare del mio meglio
 
 ### Considerazioni personali
   Questo progetto è stato utile per imparare l'utilizzo dei pannel e a conoscere meglio java dato che abbiamo dovuto utilizzare molte clssi che non conoscevamo e quindi c'é anche stata da parte mia una ricerca per informarsi su che tipo di classi implementare e gestire classi.

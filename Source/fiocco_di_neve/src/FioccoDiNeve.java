@@ -5,14 +5,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- *
- * @author alesa
+ * Questo programma si occupa di conterene un panel e una barra menu.
+ * 
+ * @author Alesasandro Aloise
+ * @version 20.12.2019
  */
 public class FioccoDiNeve extends java.awt.Frame {
 
@@ -24,6 +21,9 @@ public class FioccoDiNeve extends java.awt.Frame {
      */
     public int scelta = 1;
 
+    /**
+     * Dimensioni in qui bisgona salvare il PNG.
+     */
     public int dimensione = 0;
 
     /**
@@ -35,6 +35,15 @@ public class FioccoDiNeve extends java.awt.Frame {
         initComponents();
     }
 
+    /**
+     * Metodo generato per ottimizare il codice e non avere codice ridondante.
+     * Si occpupa del salvataggio.
+     * 
+     * @param titolo titolo della finesstra 
+     * @param estenzione estenzione che deve avere il file
+     * @param operazione quale operazione deve fare. 
+     * @param scelta scelta é per decidere se é un file normale o un file svg 
+     */
     public void salva(String titolo, String estenzione, String operazione, int scelta) {
         JFileChooser open = new JFileChooser();
         File directory = new File("Fiocchi di neve");
@@ -128,6 +137,7 @@ public class FioccoDiNeve extends java.awt.Frame {
         add(drawPanel1, java.awt.BorderLayout.WEST);
 
         jToolBar1.setRollover(true);
+        jToolBar1.setMaximumSize(new java.awt.Dimension(1024, 32769));
         jToolBar1.setMinimumSize(new java.awt.Dimension(1024, 21));
 
         reset.setText("Reset");
@@ -212,7 +222,7 @@ public class FioccoDiNeve extends java.awt.Frame {
     }//GEN-LAST:event_drawPanel1ComponentResized
 
     private void salvaPuntiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaPuntiActionPerformed
-        salva("nowflake file (*.snowflake)", "snowflake", "Salva punti", 1);
+        salva("snowflake file (*.snowflake)", "snowflake", "Salva punti", 1);
     }//GEN-LAST:event_salvaPuntiActionPerformed
 
     private void rimuoviPuntiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rimuoviPuntiActionPerformed
@@ -240,7 +250,7 @@ public class FioccoDiNeve extends java.awt.Frame {
         } else if (salvaPng.getSelectedItem().equals("1000 px")) {
             dimensione = 1000;
         } else if (salvaPng.getSelectedItem().equals("dimensioni attuali")) {
-            dimensione = this.getHeight();
+            dimensione = 500;
         }
         salva("PNG (*.png)", "PNG", "Salva PNG", 2);
     }//GEN-LAST:event_salvaPngActionPerformed

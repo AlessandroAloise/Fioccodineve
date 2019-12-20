@@ -2,15 +2,11 @@
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- *
- * @author alesa
+ * Questo programma é lo start della applicazione 
+ * 
+ * @author alesassandro Aloise
+ * @version 20.12.2019
  */
 public class StartFrame extends javax.swing.JFrame {
 
@@ -37,6 +33,9 @@ public class StartFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        default1 = new javax.swing.JButton();
+        default2 = new javax.swing.JButton();
+        default3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 153));
@@ -45,7 +44,7 @@ public class StartFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(96, 96, 96));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fiocco.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/fiocco.png"))); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(136, 205, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -73,6 +72,48 @@ public class StartFrame extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(136, 205, 255));
         jLabel1.setText("Fiocco di neve ");
 
+        default1.setBackground(new java.awt.Color(96, 96, 96));
+        default1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        default1.setForeground(new java.awt.Color(96, 96, 96));
+        default1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/default/default1.png"))); // NOI18N
+        default1.setBorder(null);
+        default1.setBorderPainted(false);
+        default1.setContentAreaFilled(false);
+        default1.setMaximumSize(new java.awt.Dimension(150, 150));
+        default1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                default1ActionPerformed(evt);
+            }
+        });
+
+        default2.setBackground(new java.awt.Color(96, 96, 96));
+        default2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        default2.setForeground(new java.awt.Color(96, 96, 96));
+        default2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/default/default3.png"))); // NOI18N
+        default2.setBorder(null);
+        default2.setBorderPainted(false);
+        default2.setContentAreaFilled(false);
+        default2.setMaximumSize(new java.awt.Dimension(150, 150));
+        default2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                default2ActionPerformed(evt);
+            }
+        });
+
+        default3.setBackground(new java.awt.Color(96, 96, 96));
+        default3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        default3.setForeground(new java.awt.Color(96, 96, 96));
+        default3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/default/default2.png"))); // NOI18N
+        default3.setBorder(null);
+        default3.setBorderPainted(false);
+        default3.setContentAreaFilled(false);
+        default3.setMaximumSize(new java.awt.Dimension(150, 150));
+        default3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                default3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -84,29 +125,45 @@ public class StartFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(default2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(default3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(default1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(98, 98, 98)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(124, 124, 124)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(98, 98, 98)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(114, 114, 114))))
+                        .addGap(89, 89, 89)
+                        .addComponent(default1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(default3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(default2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(602, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -130,7 +187,7 @@ public class StartFrame extends javax.swing.JFrame {
         open.setFileFilter(fnf);
         open.showDialog(null, "Open");
         try {
-            String handle = new String(open.getSelectedFile().toString());
+            String handle = open.getSelectedFile().toString();
             FioccoDiNeve fiocco = new FioccoDiNeve(true, handle);
             fiocco.setVisible(true);
             this.setVisible(false);
@@ -138,6 +195,48 @@ public class StartFrame extends javax.swing.JFrame {
             System.out.println("Closed");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void default1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_default1ActionPerformed
+        JFileChooser open = new JFileChooser();
+        File directory = new File("foto");
+        open.setCurrentDirectory(directory);
+        try {
+            String handle = directory +"\\default\\default1.snowflake";
+            FioccoDiNeve fiocco = new FioccoDiNeve(true, handle);
+            fiocco.setVisible(true);
+            this.setVisible(false);
+        } catch (NullPointerException npe) {
+            System.out.println("Closed");
+        }
+    }//GEN-LAST:event_default1ActionPerformed
+
+    private void default2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_default2ActionPerformed
+       JFileChooser open = new JFileChooser();
+        File directory = new File("foto");
+        open.setCurrentDirectory(directory);
+        try {
+            String handle = directory +"\\default\\default2.snowflake";
+            FioccoDiNeve fiocco = new FioccoDiNeve(true, handle);
+            fiocco.setVisible(true);
+            this.setVisible(false);
+        } catch (NullPointerException npe) {
+            System.out.println("Closed");
+        }
+    }//GEN-LAST:event_default2ActionPerformed
+
+    private void default3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_default3ActionPerformed
+        JFileChooser open = new JFileChooser();
+        File directory = new File("foto");
+        open.setCurrentDirectory(directory);
+        try {
+            String handle = directory +"\\default\\default3.snowflake";
+            FioccoDiNeve fiocco = new FioccoDiNeve(true, handle);
+            fiocco.setVisible(true);
+            this.setVisible(false);
+        } catch (NullPointerException npe) {
+            System.out.println("Closed");
+        }
+    }//GEN-LAST:event_default3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,6 +275,9 @@ public class StartFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton default1;
+    private javax.swing.JButton default2;
+    private javax.swing.JButton default3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

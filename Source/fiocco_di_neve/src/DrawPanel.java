@@ -30,7 +30,7 @@ import org.w3c.dom.DOMImplementation;
  * Questo programma genera un fiocco di neve.
  *
  * @author Alesassandro Aloise
- * @version 15.11.2019
+ * @version 20.12.2019
  */
 public class DrawPanel extends javax.swing.JPanel {
 
@@ -148,28 +148,36 @@ public class DrawPanel extends javax.swing.JPanel {
     }
 
     
-    public void trasformazioni(Graphics2D g2d ){
+    /**
+     * metodo che si occupa di fare la creazione del fiocco di neve 
+     * @param g2d ampiente grafico.
+     * @param spostamentox di quanto va spostanto di x.
+     * @param spostamentoy di quanto va spostanto di y.
+     * @param rapporto rapporto  di quanto va scalato.
+     */
+    public void trasformazioni(Graphics2D g2d, int spostamentox, int spostamentoy, double rapporto) {
         for (int i = 0; i < 6; i++) {
-                AffineTransform tr2 = new AffineTransform();
-                tr2.scale(0.5, 0.5);
-                tr2.translate(1800, 300);
-                tr2.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
-                g2d.setTransform(tr2);
-                g2d.fillPolygon(rpolygon);
+            AffineTransform tr2 = new AffineTransform();
+            tr2.scale(rapporto, rapporto);
+            tr2.translate(spostamentox, spostamentoy);
+            tr2.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
+            g2d.setTransform(tr2);
+            g2d.fillPolygon(rpolygon);
 
-                AffineTransform tr3 = new AffineTransform();
-                tr3.scale(-0.5, 0.5);
-                tr3.translate((-tpolygon.xpoints[2] * 2) - 1800, 300);
-                tr3.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
-                g2d.setTransform(tr3);
-                g2d.fillPolygon(rpolygon);
+            AffineTransform tr3 = new AffineTransform();
+            tr3.scale(-rapporto, rapporto);
+            tr3.translate((-tpolygon.xpoints[2] * 2) - spostamentox, spostamentoy);
+            tr3.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
+            g2d.setTransform(tr3);
+            g2d.fillPolygon(rpolygon);
 
-            }
+        }
     }
+
     /**
      * Il paint dell'applicazione.
      *
-     * @param g
+     * @param g parametro grafico
      */
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -187,42 +195,49 @@ public class DrawPanel extends javax.swing.JPanel {
         g2d.setColor(new Color(96, 96, 96));
         g2d.fillRect(0, 0, getWidth() / 2, getHeight());
 
-        //disegna tirangolo
-        g2d.setColor(Color.WHITE);
-        g2d.fillPolygon(tpolygon);
-
-        //disegna poligono
-        g2d.setColor(colorePoligono);
-        if (points.size() > 1) {
-            g2d.fillPolygon(polygon);
-        }
-        //diesgna puntini del poligono
-        for (int i = 0; i < points.size(); i++) {
-            g2d.setColor(Color.BLACK);
-            //TODO correggere centro dei cerchi
-            g2d.fillOval(points.get(i).x - 3, points.get(i).y - 3, 6, 6);
-        }
-
         if (renderFlag == true) {
             g2d.setColor(Color.CYAN);
             g2d.fill(rpolygon);
             g2d.setColor(Color.BLACK);
-            trasformazioni(g2d);
-            repaint();
+            trasformazioni(g2d, 1800, 300, 0.5);
         } else {
+            //disegna tirangolo
+            g2d.setColor(Color.WHITE);
+            g2d.fillPolygon(tpolygon);
             g2d.setColor(Color.white);
             g2d.fillRect(getWidth() / 2, 0, getWidth() / 2, getHeight());
+
+            //diesgna puntini del poligono
+            for (int i = 0; i < points.size(); i++) {
+                g2d.setColor(Color.BLACK);
+                //TODO correggere centro dei cerchi
+                g2d.fillOval(points.get(i).x - 3, points.get(i).y - 3, 6, 6);
+            }
+
+            //disegna poligono
+            g2d.setColor(colorePoligono);
+            if (points.size() > 1) {
+                g2d.fillPolygon(polygon);
+            }
+
         }
 
     }
+
     /**
-     * Questo paint é usato per stampare il fiocco che dopo verrà salvato in svg;
-     * @param g 
+     * Questo paint é usato per stampare il fiocco che dopo verrà salvato in svg.
+     *
+     * @param g parametro grafico 
+     * @param x di quanto va spostato di x.
+     * @param y di quanto va spostato di y.
+     * @param rapporto di quato va scalato il trangono.
      */
-    public void paintComponentDisegno(Graphics g) {
+    public void paintComponentDisegno(Graphics g, int x, int y, double rapporto) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.black);
-        trasformazioni(g2d);
+        trasformazioni(g2d, x, y, rapporto);
+        System.out.println(x);
+        System.out.println(y);
     }
 
     /**
@@ -262,15 +277,15 @@ public class DrawPanel extends javax.swing.JPanel {
      * Metodo che istanzia il poligono triangolo.
      */
     public void creazioneTriangolo() {
-        // a
-        // b é lunga il doppio di a  
-        // h é lungua b per 1,7
+        // a é la lunghezza della base (lato più corto).
+        // b é lunga il doppio di a.  
+        // h é lungua b per radice quadrata di 3.
         int[] x = new int[3];
         int[] y = new int[3];
         int bordo = getWidth() / 10;
         int a = getWidth() / 4;
         int b = a * 2;
-        double h = b * 0.8;
+        double h = a * Math.sqrt(3);
         x[0] = bordo;
         x[1] = bordo + a;
         x[2] = bordo;
@@ -310,7 +325,13 @@ public class DrawPanel extends javax.swing.JPanel {
         altezzaV = altezzaN;
         repaint();
     }
-
+    
+    /**
+     * Metodo usato per salvare in PNG.
+     * @param file nome del file
+     * @param width grandezza.
+     * @throws IOException 
+     */
     public void salvaPng(String file, int width) throws IOException {
         int x = 0;
         int y = 0;
@@ -326,25 +347,15 @@ public class DrawPanel extends javax.swing.JPanel {
         }
         BufferedImage png = new BufferedImage(width, width, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = png.createGraphics();
-        g2d.setColor(Color.black);
-        for (int i = 0; i < 6; i++) {
-            AffineTransform trPng = new AffineTransform();
-            trPng.scale(rapporto, rapporto);
-            trPng.translate(x, y);
-            trPng.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
-            g2d.setTransform(trPng);
-            g2d.fillPolygon(rpolygon);
-            AffineTransform trPng2 = new AffineTransform();
-            trPng2.scale(-rapporto, rapporto);
-            trPng2.translate((-tpolygon.xpoints[2] * 2) - x, y);
-            trPng2.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
-            g2d.setTransform(trPng2);
-            g2d.fillPolygon(rpolygon);
-        }
+        this.paintComponentDisegno(g2d, x, y, rapporto);
         ImageIO.write(png, "PNG", new File(file + ".png"));
 
     }
 
+    /**
+     * Metodo che serve per convertire i punti in file con estenzione fiocco di neve.
+     * @param handle 
+     */
     public void serialize(File handle) {
         String path = handle.toString();
         try {
@@ -354,17 +365,14 @@ public class DrawPanel extends javax.swing.JPanel {
             out.close();
             fileOut.close();
         } catch (IOException i) {
-            JOptionPane jop = new JOptionPane();
-            jop.showOptionDialog(
-                    null,
-                    "Cannot write file " + handle + ". Code: tp158",
-                    "Error opening file",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.ERROR_MESSAGE,
-                    null, null, null);
+            System.out.print("Errore non sono riuscito a caricare il file" +handle);
         }
     }
 
+    /**
+     * Metodo che serve per convertire da file a putni.
+     * @param handle 
+     */
     public void deSerialize(File handle) {
         String path = handle.toString();
         try {
@@ -382,51 +390,25 @@ public class DrawPanel extends javax.swing.JPanel {
             in.close();
             fileIn.close();
         } catch (IOException | ClassNotFoundException i) {
-            JOptionPane jop = new JOptionPane();
-            jop.showOptionDialog(
-                    null,
-                    "Cannot open file " + handle + ". Code: tp190",
-                    "Error opening file",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.ERROR_MESSAGE,
-                    null, null, null);
+             System.out.print("Errore non sono riuscito a caricare il file" +handle);
         }
     }
 
+    /**
+     * Metodo che serve per generare SVG.
+     * @param filename 
+     */
     public void generateSVG(String filename) {
         BufferedImage svg = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = svg.createGraphics();
-        g2d.setColor(Color.black);
-        for (int i = 0; i < 6; i++) {
-            AffineTransform trSvg = new AffineTransform();
-            trSvg.scale(0.4, 0.4);
-            trSvg.translate(525, 50);
-            trSvg.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
-            g2d.setTransform(trSvg);
-            g2d.fillPolygon(rpolygon);
-            AffineTransform trSvg2 = new AffineTransform();
-            trSvg2.scale(-0.4, 0.4);
-            trSvg2.translate((-tpolygon.xpoints[2] * 2) - 525, 50);
-            trSvg2.rotate(Math.toRadians(60) * i, tpolygon.xpoints[2], tpolygon.ypoints[2]);
-            g2d.setTransform(trSvg2);
-            g2d.fillPolygon(rpolygon);
-        }
-        DOMImplementation domImpl= GenericDOMImplementation.getDOMImplementation();
+        DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         String svgNS = "http://www.w3.org/2000/svg";
         Document document = domImpl.createDocument(svgNS, "svg", null);
         SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
-        this.paintComponentDisegno(svgGenerator);
+        this.paintComponentDisegno(svgGenerator, 600, 0, 0.5);
         try {
             svgGenerator.stream(filename);
         } catch (SVGGraphics2DIOException ex) {
-            JOptionPane jop = new JOptionPane();
-            jop.showOptionDialog(
-                    null,
-                    "Graphic error. Code: sf206",
-                    "Graphic error",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.ERROR_MESSAGE,
-                    null, null, null);
+             System.out.print("Errore non sono riuscito a creare il file svg");
         }
     }
 
